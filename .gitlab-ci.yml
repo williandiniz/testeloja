@@ -1,0 +1,22 @@
+image: node:lts
+
+stages:
+  - deploy
+
+# Deploy para ambiente de DEV
+deploy_development:
+  stage: deploy
+  script:
+    - curl -X POST -k https://api.pac.sebraemg.com.br:6443/apis/build.openshift.io/v1/namespaces/backend-credenciados/buildconfigs/backendcredenciados-development-bc/webhooks/b4e2882940cba6b0/generic
+  only:
+    - develop
+  when: on_success
+
+# Deploy para ambiente de HM
+deploy_release:
+  stage: deploy
+  script:
+    - curl -X POST -k https://mgsrvdevopsopsmaster01:8443/apis/build.openshift.io/v1/namespaces/credenciamento-hm/buildconfigs/backend/webhooks/hCj4XCaMWOZvFJzYhM7t/generic
+  only:
+    - release
+  when: on_success
