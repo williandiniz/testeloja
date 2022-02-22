@@ -1,26 +1,23 @@
-FROM registry.access.redhat.com/ubi8/php-74:1-47
+# Choose the Image which has Node installed already
+FROM node:lts-alpine
 
-ENV BUILD_ENV=${BUILD_ENV:-dev}
-ENV DOCUMENTROOT=/public
+# install simple http server for serving static content
+RUN npm install -g http-server
 
-# USER root
-USER 0
+# make the 'app' folder the current working directory
+WORKDIR /app
 
-# Copy and Work dir
-WORKDIR /opt/app-root/src
+# copy both 'package.json' and 'package-lock.json' (if available)
+COPY package*.json ./
+
+# install project dependencies
+RUN npm install
+
+# copy project files and folders to the current working directory (i.e. 'app' folder)
 COPY . .
-#RUN mv .env.${BUILD_ENV} .env
 
-# Composer
-#RUN TEMPFILE=$(mktemp) && \
- #   curl -o "$TEMPFILE" "https://getcomposer.org/installer" && \
-  #  php <"$TEMPFILE" && \
-   # ./composer.phar install --no-interaction --no-ansi --optimize-autoloader
+# build app for production with minification
+RUN npm run build
 
-#RUN ln -s storage/app public/storage
-
-# Cache laravel
-#RUN php artisan cache:clear
-
-# Set the default command for the resulting image
-CMD /usr/libexec/s2i/run
+EXPOSE 8080
+CMD [ "http-server", "dist" ]
