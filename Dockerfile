@@ -9,7 +9,7 @@ USER 0
 # Copy and Work dir
 WORKDIR /opt/app-root/src
 COPY . .
-RUN mv .env.${BUILD_ENV} .env
+#RUN mv .env.${BUILD_ENV} .env
 
 # Composer
 RUN TEMPFILE=$(mktemp) && \
@@ -17,7 +17,7 @@ RUN TEMPFILE=$(mktemp) && \
     php <"$TEMPFILE" && \
     ./composer.phar install --no-interaction --no-ansi --optimize-autoloader
 
-RUN ln -s storage/app public/storage
+#RUN ln -s storage/app public/storage
 
 # Cache laravel
 RUN php artisan cache:clear
