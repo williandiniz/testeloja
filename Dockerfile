@@ -12,10 +12,10 @@ COPY . .
 #RUN mv .env.${BUILD_ENV} .env
 
 # Composer
-RUN TEMPFILE=$(mktemp) && \
-    curl -o "$TEMPFILE" "https://getcomposer.org/installer" && \
-    php <"$TEMPFILE" && \
-    ./composer.phar install --no-interaction --no-ansi --optimize-autoloader
+#RUN TEMPFILE=$(mktemp) && \
+ #   curl -o "$TEMPFILE" "https://getcomposer.org/installer" && \
+  #  php <"$TEMPFILE" && \
+   # ./composer.phar install --no-interaction --no-ansi --optimize-autoloader
 
 #RUN ln -s storage/app public/storage
 
