@@ -20,7 +20,7 @@ COPY . .
 #RUN ln -s storage/app public/storage
 
 # Cache laravel
-RUN php artisan cache:clear
+#RUN php artisan cache:clear
 
 # Set the default command for the resulting image
 CMD /usr/libexec/s2i/run
