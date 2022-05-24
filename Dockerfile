@@ -1,23 +1,23 @@
 # Choose the Image which has Node installed already
-FROM node:lts-alpine
+FROM ubuntu:18.04
+RUN apt-get update && apt-get upgrade -y
+RUN apt-get install apache2 -y
+RUN apt update -y &&\
+    apt install nano -y &&\
+    apt-get install libldb-dev libldap2-dev  -y
 
-# install simple http server for serving static content
-RUN npm install -g http-server
+RUN apt install curl -y
 
-# make the 'app' folder the current working directory
-WORKDIR /app
+WORKDIR /var/www/html
+COPY . .
+COPY .apache/. /etc/apache2/
 
-# copy both 'package.json' and 'package-lock.json' (if available)
-#COPY package*.json ./
-
-# install project dependencies
-RUN npm install
-
-# copy project files and folders to the current working directory (i.e. 'app' folder)
-#COPY . .
-
-# build app for production with minification
-RUN npm run build
-
+RUN chmod -R 777 /var/www/html
+RUN a2ensite webapi
+RUN a2enmod rewrite
+RUN a2enmod headers
+RUN a2enmod proxy
+RUN a2enmod proxy_http
 EXPOSE 8080
-CMD [ "http-server", "dist" ]
+USER 1001
+RUN service apache2 restart
