@@ -20,4 +20,4 @@ RUN a2enmod proxy
 RUN a2enmod proxy_http
 EXPOSE 8080
 USER 1001
-RUN service apache2 restart
+#RUN service apache2 restart
