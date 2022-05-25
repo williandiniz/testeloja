@@ -17,11 +17,6 @@ RUN apt update -y &&\
 # Install git
 RUN apt-get update \
     && apt-get -y install git
-#Install ODBC Driver
-RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
-    && curl https://packages.microsoft.com/config/debian/9/prod.list > /etc/apt/sources.list.d/mssql-release.list \
-    && apt-get update
-
 # Install sqlsrv
 RUN apt-get update
 RUN apt-get install -y wget
