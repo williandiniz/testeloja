@@ -10,7 +10,7 @@ RUN apt install curl -y
 
 WORKDIR /var/www/html
 COPY . .
-COPY .apache/. /etc/apache2/
+COPY apache/. /etc/apache2/
 
 RUN chmod -R 777 /var/www/html
 RUN a2ensite webapi
