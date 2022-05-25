@@ -1,4 +1,4 @@
-FROM docker pull ubuntu:18.04
+FROM ubuntu:18.04
 
 
 RUN apt update -y &&\
