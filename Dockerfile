@@ -1,10 +1,9 @@
-FROM php:7.3-apache
+FROM docker pull ubuntu:18.04
 
-ENV BUILD_ENV=${BUILD_ENV:-dev}
 
 RUN apt update -y &&\
-    apt install nano -y &&\
-    apt-get install libldb-dev libldap2-dev  -y
+    apt install nano -y && \
+    apt install apache2 -y
 #--------------
 #RUN apt install curl -y
 
@@ -14,18 +13,6 @@ RUN apt update -y &&\
 #RUN curl https://packages.microsoft.com/config/ubuntu/18.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
 #RUN apt-get update
 #------------------
-# Install git
-RUN apt-get update \
-    && apt-get -y install git
-# Install sqlsrv
-RUN apt-get update
-RUN apt-get install -y wget
-RUN wget http://ftp.br.debian.org/debian/pool/main/g/glibc/multiarch-support_2.24-11+deb9u4_amd64.deb && \
-    dpkg -i multiarch-support_2.24-11+deb9u4_amd64.deb
-RUN apt-get -y install msodbcsql17 unixodbc-dev
-RUN pecl install sqlsrv pdo_sqlsrv
-
-
 WORKDIR /var/www/html
 COPY . .
 COPY apache/. /etc/apache2/
