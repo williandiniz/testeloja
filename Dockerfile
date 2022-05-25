@@ -2,7 +2,7 @@ FROM ubuntu:18.04
 
 
 RUN apt update -y &&\
-    apt install nano -y && 
+    apt install nano -y 
     #apt install apache2 -y
 #--------------
 #RUN apt install curl -y
