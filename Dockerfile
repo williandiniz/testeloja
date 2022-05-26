@@ -1,40 +1,22 @@
-#FROM ubuntu:18.04
-FROM ubuntu:latest
+FROM registry.access.redhat.com/ubi8/ubi:8.1
 
+RUN yum update -y 
+RUN yum upgrade -y
 
-# Install apache, PHP 7, and supplimentary programs. openssh-server, curl, and lynx-cur are for debugging the container.
-RUN apt-get update && \
-    apt-get -y upgrade && \
-    apt-get -y install apache2
-    
-    
-    
+RUN dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+RUN dnf install -y https://rpms.remirepo.net/enterprise/remi-release-8.rpm 
+RUN dnf module enable php:remi-8.0 -y  
+RUN dnf install php php-cli php-common -y
 
-# Enable apache mods.
-#RUN a2enmod php7.3
-RUN a2enmod rewrite
+#RUN yum --disableplugin=subscription-manager -y module enable php:8 \
+ # && yum --disableplugin=subscription-manager -y install httpd php \
+  #&& yum --disableplugin=subscription-manager clean all
 
-# Update the PHP.ini file, enable <? ?> tags and quieten logging.
-#RUN sed -i "s/short_open_tag = Off/short_open_tag = On/" /etc/php/7.3/apache2/php.ini
-#RUN sed -i "s/error_reporting = .*$/error_reporting = E_ERROR | E_WARNING | E_PARSE/" /etc/php/7.0/apache2/php.ini
+ADD index.php /var/www/html
+ADD info.php /var/www/html
 
-# Manually set up the apache environment variables
-ENV APACHE_RUN_USER www-data
-ENV APACHE_RUN_GROUP www-data
-ENV APACHE_LOG_DIR /var/log/apache2
-ENV APACHE_LOCK_DIR /var/lock/apache2
-ENV APACHE_PID_FILE /var/run/apache2.pid
-
-# Copy this repo into place.
-VOLUME ["/var/www", "/etc/apache2/sites-enabled"]
-
-# Update the default apache site with the config we created.
-#ADD apache-config.conf /etc/apache2/sites-enabled/000-default.conf
-
-# Expose apache.
-EXPOSE 8080
-
-# By default start up apache in the foreground, override with /bin/bash for interative.
-CMD /usr/sbin/apache2ctl -D FOREGROUND
-
-
+RUN sed -i 's/Listen 80/Listen 8080/' /etc/httpd/conf/httpd.conf \
+  && sed -i 's/listen.acl_users = apache,nginx/listen.acl_users =/' /etc/php-fpm.d/www.conf \
+  && mkdir /run/php-fpm \
+  && chgrp -R 0 /var/log/httpd /var/run/httpd /run/php-fpm \
+  && chmod -R g=u /var/log/httpd /var/run/httpd /run/php-fpm
