@@ -1,6 +1,6 @@
 FROM ubuntu:18.04
 
-ENV CONTAINER_TIMEZONE="Europe/Brussels"
+ENV CONTAINER_TIMEZONE="America/Sao_Paulo"
 
 RUN ln -snf /usr/share/zoneinfo/$CONTAINER_TIMEZONE /etc/localtime && echo $CONTAINER_TIMEZONE > /etc/timezone
 
@@ -23,5 +23,5 @@ RUN /usr/sbin/apache2 -V
 
 
 RUN echo 'Hello, docker' > /var/www/index.html
-ENTRYPOINT ["/usr/sbin/apache2"]
-CMD ["-D", "FOREGROUND"]
+#ENTRYPOINT ["/usr/sbin/apache2"]
+#CMD ["-D", "FOREGROUND"]
