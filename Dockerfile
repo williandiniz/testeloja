@@ -17,7 +17,7 @@ RUN sed -i 's/Listen 80/Listen 8080/' /etc/httpd/conf/httpd.conf \
 #RUN a2enmod rewrite
 #RUN a2enmod headers
 COPY info.php /var/www/index1.php 
-COPY info.php /usr/share/testpage/index2.php
+COPY teste.html /usr/share/httpd/noindex/
 
 COPY info.php /usr/share/doc/oniguruma5php/index3.php
 COPY info.php /usr/share/doc/cyrus-sasl-lib/index4.php
@@ -25,7 +25,7 @@ COPY info.php /usr/share/testpage/index5.php
 COPY info.php /usr/share/httpd/noindex/index6.php
 RUN rm /usr/share/doc/cyrus-sasl-lib/index.html
 RUN echo 'Hello, docker /usr/share/testpage/index.html ' > /usr/share/testpage/index.html
-RUN echo 'Hello, docker /usr/share/httpd/noindex/index.html' > /usr/share/httpd/noindex/index.html
+RUN echo 'Hello, docker f/usr/share/httpd/noindex/index.html' > /usr/share/httpd/noindex/index.html
 #RUN rm /usr/share/httpd/noindex/index.html
 #RUN rm /usr/share/testpage/index.html
 
