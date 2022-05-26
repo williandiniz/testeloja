@@ -24,3 +24,4 @@ RUN /usr/sbin/apache2 -V
 RUN echo 'Hello, docker' > /var/www/index.html
 #ENTRYPOINT ["/usr/sbin/apache2"]
 #CMD ["-D", "FOREGROUND"]
+RUN service apache2 restart
