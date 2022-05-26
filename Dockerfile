@@ -10,7 +10,7 @@ WORKDIR /var/www/html
 #COPY . .
 #COPY apache/. /etc/apache2/
 
-RUN sed -i 's/Listen 80/Listen 8080/' /etc/apache2/ports.conf \
+RUN sed -i 's/Listen 80/Listen 8080/' /etc/apache2/ports.conf
 RUN mkdir /tmp/apache
 RUN chmod 777 /tmp/apache
 ENV APACHE_RUN_USER www-data
