@@ -29,7 +29,7 @@ ENV APACHE_PID_FILE /var/run/apache2.pid
 VOLUME ["/var/www", "/etc/apache2/sites-enabled"]
 
 # Update the default apache site with the config we created.
-ADD apache-config.conf /etc/apache2/sites-enabled/000-default.conf
+#ADD apache-config.conf /etc/apache2/sites-enabled/000-default.conf
 
 # Expose apache.
 EXPOSE 8080
