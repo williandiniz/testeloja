@@ -8,7 +8,7 @@ RUN yum upgrade -y
 #RUN dnf module enable php:remi-8.0 -y  
 #RUN dnf install php php-cli php-common -y
 #RUN dnf module enable php:remi-8.0 -y
-RUN yum install httpd
+RUN yum install httpd -y
 
 RUN sed -i 's/Listen 80/Listen 8080/' /etc/httpd/conf/httpd.conf \
   && sed -i 's/listen.acl_users = apache,nginx/listen.acl_users =/' /etc/php-fpm.d/www.conf \
