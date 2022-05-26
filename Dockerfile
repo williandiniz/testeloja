@@ -8,8 +8,7 @@ RUN apt-get update && \
     apt-get -y install \
     apache2 \
     php7.3 \
-    php7.3-cli \
-    libapache2-mod-php7.3 
+    
     
 
 # Enable apache mods.
