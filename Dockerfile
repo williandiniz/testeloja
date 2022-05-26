@@ -13,7 +13,7 @@ RUN mkdir /tmp/apache
 RUN chmod 777 /tmp/apache
 ENV APACHE_RUN_USER www-data
 ENV APACHE_RUN_GROUP www-data
-#ENV APACHE_LOG_DIR /tmp/apache
+ENV APACHE_LOG_DIR /tmp/apache
 ENV APACHE_RUN_DIR /var/www/html
 #RUN chmod 777 /var/log/apache2/error.log
 
