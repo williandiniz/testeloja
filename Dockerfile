@@ -8,13 +8,13 @@ RUN dnf install -y https://rpms.remirepo.net/enterprise/remi-release-8.rpm
 #RUN dnf module enable php:remi-8.0 -y  
 #RUN dnf install php php-cli php-common -y
 
-RUN yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -y
-RUN yum install https://rpms.remirepo.net/enterprise/remi-release-7.rpm -y
+RUN dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -y
+RUN dnf install -y https://rpms.remirepo.net/enterprise/remi-release-7.rpm -y
 RUN subscription-manager repos --enable=rhel-7-server-optional-rpms -y
-RUN yum install yum-utils -y
+RUN dnf install -y yum-utils -y
 RUN yum-config-manager --enable remi-php81 -y
 RUN yum update -y
-RUN yum install php php-pdo php-pear php-devel -y
+RUN dnf install -y install php php-pdo php-pear php-devel -y
 
 
 #RUN yum --disableplugin=subscription-manager -y module enable php:8 \
