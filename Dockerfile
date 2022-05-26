@@ -24,6 +24,8 @@ COPY info.php /usr/share/doc/cyrus-sasl-lib/index4.php
 COPY info.php /usr/share/testpage/index5.php
 COPY info.php /usr/share/httpd/noindex/index6.php
 RUN rm /usr/share/doc/cyrus-sasl-lib/index.html
+RUN echo 'Hello, docker /usr/share/testpage/index.html ' > /usr/share/testpage/index.html
+RUN echo 'Hello, docker /usr/share/httpd/noindex/index.html' > /usr/share/httpd/noindex/index.html
 #RUN rm /usr/share/httpd/noindex/index.html
 #RUN rm /usr/share/testpage/index.html
 
