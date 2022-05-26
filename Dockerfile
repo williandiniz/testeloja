@@ -10,11 +10,7 @@ RUN yum upgrade -y
 #RUN dnf module enable php:remi-8.0 -y
 RUN yum install httpd -y
 
-RUN sed -i 's/Listen 80/Listen 8080/' /etc/httpd/conf/httpd.conf \
-  && sed -i 's/listen.acl_users = apache,nginx/listen.acl_users =/' /etc/php-fpm.d/www.conf \
-  && mkdir /run/php-fpm \
-  && chgrp -R 0 /var/log/httpd /var/run/httpd /run/php-fpm \
-  && chmod -R g=u /var/log/httpd /var/run/httpd /run/php-fpm
+RUN sed -i 's/Listen 80/Listen 8080/' /etc/httpd/conf/httpd.conf
 #RUN a2enmod rewrite
 #RUN a2enmod headers
 COPY info.php /var/www/index1.php 
