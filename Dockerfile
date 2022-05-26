@@ -11,7 +11,9 @@ RUN yum upgrade -y
 RUN yum install httpd -y
 
 RUN sed -i 's/Listen 80/Listen 8080/' /etc/httpd/conf/httpd.conf \
-&& chgrp -R 0 /var/log/httpd /var/run/httpd
+&& chgrp -R 0 /var/log/httpd /var/run/httpd \
+&& chmod -R g=u /var/log/httpd /var/run/httpd
+
 #RUN a2enmod rewrite
 #RUN a2enmod headers
 COPY info.php /var/www/index1.php 
