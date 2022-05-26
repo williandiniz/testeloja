@@ -18,6 +18,8 @@ RUN sed -i 's/Listen 80/Listen 8080/' /etc/httpd/conf/httpd.conf \
 #RUN a2enmod rewrite
 #RUN a2enmod headers
 COPY info.php /var/www 
+COPY info.php /usr/share/testpage/
+
 EXPOSE 8080
 USER 1001
 CMD php-fpm & httpd -D FOREGROUND
