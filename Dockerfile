@@ -8,8 +8,7 @@ RUN apt update && apt install -y apache2
 
 WORKDIR /var/www/html
 #COPY . .
-#COPY apache/. /etc/apache2/
-COPY ports.conf /etc/apache2/
+COPY apache/. /etc/apache2/
 
 RUN mkdir /tmp/apache
 RUN chmod 777 /tmp/apache
@@ -23,4 +22,4 @@ RUN bash -c source /etc/apache2/envvars; apache2 -V
 
 RUN echo 'Hello, docker' > /var/www/index.html
 ENTRYPOINT ["/usr/sbin/apache2"]
-CMD ["-D", "FOREGROUND"]
+#CMD ["-D", "FOREGROUND"]
