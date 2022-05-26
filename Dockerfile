@@ -17,7 +17,7 @@ ENV APACHE_LOG_DIR /tmp/apache
 ENV APACHE_RUN_DIR /var/www/html
 #RUN chmod 777 /var/log/apache2/error.log
 RUN /usr/sbin/apache2 -V
-RUN bash -c "source /etc/apache2/envvars; apache2 -V"
+RUN bash -c source /etc/apache2/envvars; apache2 -V
 
 RUN echo 'Hello, docker' > /var/www/index.html
 ENTRYPOINT ["/usr/sbin/apache2"]
