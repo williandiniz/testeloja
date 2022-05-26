@@ -7,8 +7,10 @@ RUN ln -snf /usr/share/zoneinfo/$CONTAINER_TIMEZONE /etc/localtime && echo $CONT
 RUN apt update && apt install -y apache2
 
 WORKDIR /var/www/html
-COPY . .
-COPY apache/. /etc/apache2/
+#COPY . .
+#COPY apache/. /etc/apache2/
+COPY ports.conf /etc/apache2/
+
 RUN mkdir /tmp/apache
 RUN chmod 777 /tmp/apache
 ENV APACHE_RUN_USER www-data
