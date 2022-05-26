@@ -1,28 +1,27 @@
 
-FROM ubuntu:18.04
+FROM registry.access.redhat.com/ubi8/ubi:8.1
 
-ENV CONTAINER_TIMEZONE="America/Sao_Paulo"
+RUN yum update -y 
+RUN yum upgrade -y
 
-RUN ln -snf /usr/share/zoneinfo/$CONTAINER_TIMEZONE /etc/localtime && echo $CONTAINER_TIMEZONE > /etc/timezone
+RUN dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+RUN dnf install -y https://rpms.remirepo.net/enterprise/remi-release-8.rpm 
+RUN dnf module enable php:remi-8.0 -y  
+RUN dnf install php php-cli php-common -y
+RUN dnf module enable php:remi-8.0 -y
+RUN dnf module enable proxy_module
+ADD index.php /var/www/html
+ADD info.php /var/www/html
 
-RUN apt update && apt install -y apache2
-
-WORKDIR /var/www/html
-#COPY . .
-COPY apache/. /etc/apache2/
-
-RUN mkdir /tmp/apache
-RUN chmod 777 /tmp/apache
-ENV APACHE_RUN_USER www-data
-ENV APACHE_RUN_GROUP www-data
-ENV APACHE_LOG_DIR /tmp/apache
-ENV APACHE_RUN_DIR /var/www/html
-#RUN chmod 777 /var/log/apache2/error.log
-
-RUN /usr/sbin/apache2 -V
-
-
-RUN echo 'Hello, docker' > /var/www/index.html
-ENTRYPOINT ["/usr/sbin/apache2"]
-CMD ["-D", "FOREGROUND"]
-RUN service apache2 start
+RUN sed -i 's/Listen 80/Listen 8080/' /etc/httpd/conf/httpd.conf \
+  && sed -i 's/listen.acl_users = apache,nginx/listen.acl_users =/' /etc/php-fpm.d/www.conf \
+  && mkdir /run/php-fpm \
+  && chgrp -R 0 /var/log/httpd /var/run/httpd /run/php-fpm \
+  && chmod -R g=u /var/log/httpd /var/run/httpd /run/php-fpm
+#RUN a2enmod rewrite
+#RUN a2enmod headers
+RUN a2enmod proxy
+RUN a2enmod proxy_http
+EXPOSE 8080
+USER 1001
+CMD php-fpm & httpd -D FOREGROUND
