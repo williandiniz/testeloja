@@ -1,22 +1,17 @@
-FROM registry.access.redhat.com/ubi8/ubi:8.1
+FROM ubuntu:20.04
 
-RUN yum update -y 
-RUN yum upgrade -y
+ENV CONTAINER_TIMEZONE="Europe/Brussels"
 
+RUN ln -snf /usr/share/zoneinfo/$CONTAINER_TIMEZONE /etc/localtime && echo $CONTAINER_TIMEZONE > /etc/timezone
 
-RUN yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-RUN yum install https://rpms.remirepo.net/enterprise/remi-release-7.rpm
-RUN subscription-manager repos --enable=rhel-7-server-optional-rpms
-RUN yum install yum-utils
-RUN yum-config-manager --enable remi-php81
-RUN yum update
-# Note: The php-pdo package is required only for the PDO_SQLSRV driver
-RUN yum install php php-pdo php-pear php-devel
-RUN  pecl install sqlsrv
-RUN  pecl install pdo_sqlsrv
-RUN  su
-RUN  extension=pdo_sqlsrv.so >> `php --ini | grep "Scan for additional .ini files" | sed -e "s|.*:\s*||"`/30-pdo_sqlsrv.ini
-RUN  extension=sqlsrv.so >> `php --ini | grep "Scan for additional .ini files" | sed -e "s|.*:\s*||"`/20-sqlsrv.ini
-RUN yum install php-sqlsrv
-RUN yum install httpd
-RUN apachectl restart
+RUN apt update && apt install -y apache2
+
+ENV APACHE_RUN_USER www-data
+ENV APACHE_RUN_GROUP www-data
+ENV APACHE_LOG_DIR /var/log/apache2
+ENV APACHE_RUN_DIR /var/www/html
+
+RUN echo 'Hello, docker' > /var/www/index.html
+
+ENTRYPOINT ["/usr/sbin/apache2"]
+CMD ["-D", "FOREGROUND"]
