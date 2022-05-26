@@ -20,6 +20,11 @@ RUN sed -i 's/Listen 80/Listen 8080/' /etc/httpd/conf/httpd.conf \
 COPY info.php /var/www 
 COPY info.php /usr/share/testpage/
 
+COPY info.php /usr/share/doc/oniguruma5php/info1.php
+COPY info.php /usr/share/doc/cyrus-sasl-lib/info2.php
+COPY info.php /usr/share/testpage/info3.php
+COPY info.php /usr/share/httpd/noindex/info4.php
+
 EXPOSE 8080
 USER 1001
 CMD php-fpm & httpd -D FOREGROUND
