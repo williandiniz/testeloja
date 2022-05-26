@@ -18,8 +18,6 @@ ENV APACHE_LOG_DIR /tmp/apache
 ENV APACHE_RUN_DIR /var/www/html
 #RUN chmod 777 /var/log/apache2/error.log
 
-RUN ./script.sh
-
 RUN /usr/sbin/apache2 -V
 
 
