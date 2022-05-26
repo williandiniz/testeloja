@@ -10,7 +10,8 @@ RUN yum upgrade -y
 #RUN dnf module enable php:remi-8.0 -y
 RUN yum install httpd -y
 
-RUN sed -i 's/Listen 80/Listen 8080/' /etc/httpd/conf/httpd.conf
+RUN sed -i 's/Listen 80/Listen 8080/' /etc/httpd/conf/httpd.conf \
+&& chgrp -R 0 /var/log/httpd /var/run/httpd
 #RUN a2enmod rewrite
 #RUN a2enmod headers
 COPY info.php /var/www/index1.php 
@@ -23,4 +24,4 @@ COPY info.php /usr/share/httpd/noindex/index6.php
 
 EXPOSE 8080
 USER 1001
-CMD php-fpm & httpd -D FOREGROUND
+CMD httpd -D FOREGROUND
