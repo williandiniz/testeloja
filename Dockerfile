@@ -17,6 +17,7 @@ RUN sed -i 's/Listen 80/Listen 8080/' /etc/httpd/conf/httpd.conf \
   && chmod -R g=u /var/log/httpd /var/run/httpd /run/php-fpm
 #RUN a2enmod rewrite
 #RUN a2enmod headers
+COPY info.php /var/www 
 EXPOSE 8080
 USER 1001
 CMD php-fpm & httpd -D FOREGROUND
