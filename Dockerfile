@@ -7,8 +7,7 @@ RUN dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.n
 RUN dnf install -y https://rpms.remirepo.net/enterprise/remi-release-8.rpm 
 RUN dnf module enable php:remi-8.0 -y  
 RUN dnf install php php-cli php-common php-pdo php-pear php-devel -y
-RUN yum install php-sqlsrv -y
-
+RUN pecl channel-update pecl.php.net -y
 
 #RUN yum --disableplugin=subscription-manager -y module enable php:8 \
  # && yum --disableplugin=subscription-manager -y install httpd php \
