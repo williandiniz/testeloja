@@ -13,6 +13,7 @@ RUN ACCEPT_EULA=Y yum install -y msodbcsql17
 #RUN ACCEPT_EULA=Y yum install -y mssql-tools17
 RUN echo 'export PATH="$PATH:/opt/mssql-tools17/bin"' >> ~/.bashrc
 RUN source ~/.bashrc
+RUN dnf install make
 # optional: for unixODBC development headers
 #RUN yum install -y unixODBC-devel
 RUN pecl install sqlsrv
