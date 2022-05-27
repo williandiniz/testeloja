@@ -15,6 +15,10 @@ RUN echo 'export PATH="$PATH:/opt/mssql-tools17/bin"' >> ~/.bashrc
 RUN source ~/.bashrc
 # optional: for unixODBC development headers
 #RUN yum install -y unixODBC-devel
+RUN pecl install sqlsrv
+RUN pecl install pdo_sqlsrv
+RUN echo extension=pdo_sqlsrv.so >> `php --ini | grep "Scan for additional .ini files" | sed -e "s|.*:\s*||"`/30-pdo_sqlsrv.ini
+RUN echo extension=sqlsrv.so >> `php --ini | grep "Scan for additional .ini files" | sed -e "s|.*:\s*||"`/20-sqlsrv.ini
 
 
 
