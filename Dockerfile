@@ -8,6 +8,7 @@ RUN dnf install -y https://rpms.remirepo.net/enterprise/remi-release-8.rpm
 RUN dnf module enable php:remi-8.0 -y  
 RUN dnf install php php-cli php-common php-pdo php-pear php-devel -y
 RUN curl https://packages.microsoft.com/config/rhel/8/prod.repo > /etc/yum.repos.d/mssql-release.repo
+RUN ACCEPT_EULA=Y yum install -y msodbcsql17
 
 
 #RUN yum --disableplugin=subscription-manager -y module enable php:8 \
