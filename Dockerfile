@@ -10,9 +10,9 @@ RUN dnf install php php-cli php-common php-pdo php-pear php-devel -y
 RUN curl https://packages.microsoft.com/config/rhel/8/prod.repo > /etc/yum.repos.d/mssql-release.repo
 RUN yum update -y 
 RUN ACCEPT_EULA=Y yum install -y msodbcsql17
-RUN ACCEPT_EULA=Y yum install -y mssql-tools17
-#RUN echo 'export PATH="$PATH:/opt/mssql-tools17/bin"' >> ~/.bashrc
-#RUN source ~/.bashrc
+#RUN ACCEPT_EULA=Y yum install -y mssql-tools17
+RUN echo 'export PATH="$PATH:/opt/mssql-tools17/bin"' >> ~/.bashrc
+RUN source ~/.bashrc
 # optional: for unixODBC development headers
 #RUN yum install -y unixODBC-devel
 
